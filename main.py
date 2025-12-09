@@ -21,7 +21,11 @@ except ValueError:
 
 try:
     for raw_infile in args.files:
-        infile = raw_infile.split("/")[1]
+        infile = ""
+        if "/" in raw_infile:
+            infile = raw_infile.split("/")[1]
+        else:
+            infile = raw_infile
         filename, _ext = os.path.splitext(infile)
         outfile = filename + ".webp"
         if infile != outfile:
@@ -35,7 +39,7 @@ try:
                 print("Cannot convert", infile)
             else:
                 print(f"{filename} has been successfully converted!")
-except IndexError:
+except OSError:
     print("No argument was provided.")
 finally:
     print("Finished.")
